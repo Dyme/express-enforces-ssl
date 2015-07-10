@@ -3,16 +3,15 @@
 module.exports = function enforceHTTPS() {
 
 	return function(req, res, next) {
-
 		var isHttps = req.secure;
+		var isTwilio = req._parsedUrl.pathname.indexOf('dyme-twiml') > 0 ;
 
-		if (isHttps) {
+		if(isHttps || isTwilio){
 			next();
 		} else {
 			redirectUrl(req, res);
 		}
-	};
-
+	}
 };
 
 var redirectUrl = function (req, res) {
